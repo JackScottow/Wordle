@@ -35,7 +35,7 @@ function Game(props) {
   });
 
   useEffect(() => {
-    props.darkness(dark);
+    props.darkness(dark); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dark]);
 
   const keyHandler = (letterValue) => {

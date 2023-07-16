@@ -21,7 +21,7 @@ function Box(props) {
         if (props.state === "N") setState("text-white bg-zinc-500 bg-zinc-700");
       },
       200 * (props.pos + 1) + 75
-    );
+    ); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.state]);
 
   return <div className={"grid place-items-center w-12 h-12 p-0 m-0 text-4xl font-bold rounded-sm sm:w-14 sm:h-14 " + state}>{props.value === "DEL" ? <BackspaceIcon /> : props.value}</div>;

@@ -12,40 +12,40 @@ function Help() {
     <>
       <p className="mr-1 text-sm text-left opacity-75 sm:text-base font-regular">Guess the WORDLE in six tries.</p>
       <ul className="px-5 pt-3 mr-1 text-sm text-left list-disc opacity-75 sm:text-base font-regular">
-        <li>Each guess must be a valid five-letter word. Hit the enter button to submit.</li>
-        <li>After each guess, the color of the tiles will change to show how close your guess was to the word.</li>
+        <li>Each guess must be a valid 5-letter word.</li>
+        <li>The color of the tiles will change to show how close your guess was to the word.</li>
       </ul>
 
       <h3 className="py-2 font-bold text-left">Examples</h3>
       <div className="flex gap-1">
-        <Box value="S" state="C" />
-        <Box value="W" />
+        <Box value="W" state="C" />
         <Box value="E" />
         <Box value="A" />
-        <Box value="T" />
+        <Box value="R" />
+        <Box value="Y" />
       </div>
       <p className="py-2 text-sm text-left opacity-75 sm:text-base">
-        The letter <strong>S</strong> is in the word and in the correct spot.
+        The letter <strong>W</strong> is in the word and in the correct spot.
       </p>
       <div className="flex gap-1">
-        <Box value="N" />
+        <Box value="P" />
+        <Box value="I" />
+        <Box value="L" state="E" />
+        <Box value="L" />
+        <Box value="S" />
+      </div>
+      <p className="py-2 text-sm text-left opacity-75 sm:text-base">
+        The letter <strong>L</strong> is in the word but in the wrong spot.
+      </p>
+      <div className="flex gap-1">
+        <Box value="V" />
+        <Box value="A" state="N" />
+        <Box value="G" />
         <Box value="U" />
-        <Box value="M" state="E" />
-        <Box value="B" />
-        <Box value="S" />
+        <Box value="E" />
       </div>
       <p className="py-2 text-sm text-left opacity-75 sm:text-base">
-        The letter <strong>M</strong> is in the word and in the correct spot.
-      </p>
-      <div className="flex gap-1">
-        <Box value="F" />
-        <Box value="L" state="N" />
-        <Box value="A" />
-        <Box value="T" />
-        <Box value="S" />
-      </div>
-      <p className="py-2 text-sm text-left opacity-75 sm:text-base">
-        The letter <strong>N</strong> is in the word and in the correct spot.
+        The letter <strong>A</strong> is not in the word in any spot.
       </p>
     </>
   );

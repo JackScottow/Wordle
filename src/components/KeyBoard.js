@@ -14,7 +14,7 @@ let defaultLetters = [];
 });
 
 function Key(props) {
-  const [state, setState] = useState("bg-gray-200 hover:bg-gray-300 dark:bg-neutral-500 dark:text-white dark:hover:bg-zinc-500");
+  const [state, setState] = useState("bg-gray-200 hover:bg-zinc-300 dark:bg-neutral-500 dark:text-white dark:hover:bg-neutral-700");
 
   const x = props.value.length === 1 ? "text-xl w-8 sm:w-10 " : "p-2 sm:p-4 ";
   const returnKey = () => {
@@ -39,7 +39,7 @@ function Key(props) {
 function KeyBoard(props) {
   const [letters, setletters] = useState(defaultLetters);
   useEffect(() => {
-    setletters(props.letters);
+    setletters(props.letters); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.changed]);
 
   const keyHandler = (value) => {

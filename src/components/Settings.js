@@ -2,7 +2,7 @@ import Menu from "@mui/material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useState } from "react";
-import { MenuItem, Switch } from "@mui/material";
+import { Switch } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
 function Settings(props) {

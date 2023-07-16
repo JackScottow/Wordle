@@ -98,11 +98,11 @@ const Board = (props) => {
           });
         }
       }
-    }
+    } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.clicks]);
 
   useEffect(() => {
-    props.letters(letters);
+    props.letters(letters); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [changed]);
 
   return (
