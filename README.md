@@ -4,7 +4,7 @@ This is a wordle clone built with ReactJS and TailwindCSS
 
 ##
 
-[Demo here](https://www.wordle.jackscottow.com)
+[Demo here](wordle.jackscottow.com)
 
 ## Technologies Used
 
