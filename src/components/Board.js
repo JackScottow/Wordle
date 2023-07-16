@@ -16,7 +16,6 @@ for (let i = 0; i < 6; i++) {
     defaulBoard[i].push(["", ""]);
   }
 }
-
 const Board = (props) => {
   const [letters, setLetters] = useState(defaultLetters);
   const [board, setBoard] = useState(defaulBoard);
