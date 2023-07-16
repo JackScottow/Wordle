@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BackspaceIcon from "@mui/icons-material/Backspace";
 
-function Box(props) {
+const Box = (props) => {
   const [state, setState] = useState("text-black border-2 border-zinc-700 dark:bg-neutral-900 dark:text-white");
 
   useEffect(() => {
@@ -25,6 +25,6 @@ function Box(props) {
   }, [props.state]);
 
   return <div className={"grid place-items-center w-12 h-12 p-0 m-0 text-4xl font-bold rounded-sm sm:w-14 sm:h-14 " + state}>{props.value === "DEL" ? <BackspaceIcon /> : props.value}</div>;
-}
+};
 
 export default Box;

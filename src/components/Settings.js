@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Switch } from "@mui/material";
 import GitHubIcon from "@mui/icons-material/GitHub";
 
-function Settings(props) {
+const Settings = (props) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleChange = () => {
@@ -34,6 +34,6 @@ function Settings(props) {
       </Menu>
     </div>
   );
-}
+};
 
 export default Settings;

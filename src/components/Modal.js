@@ -1,6 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 
-function Modal(props) {
+const Modal = (props) => {
   return (
     <div className="absolute grid w-full h-full">
       <div className="z-10 flex flex-col p-5 pb-2 bg-white place-self-center rounded-xl drop-shadow-3xl dark:bg-neutral-900 dark:text-white" style={{ width: "min(600px, 90vw)", height: "min(580px, 80vh)" }}>
@@ -24,6 +24,6 @@ function Modal(props) {
       />
     </div>
   );
-}
+};
 
 export default Modal;

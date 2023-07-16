@@ -1,7 +1,7 @@
 import "./App.css";
 import Game from "./components/Game";
 
-function App() {
+const App = () => {
   const darkHandler = (dark) => {
     if (dark) document.documentElement.classList.add("dark");
     else document.documentElement.classList.remove("dark");
@@ -12,6 +12,6 @@ function App() {
       <Game darkness={darkHandler} />
     </div>
   );
-}
+};
 
 export default App;

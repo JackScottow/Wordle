@@ -13,7 +13,7 @@ let defaultLetters = [];
   defaultLetters[i] = "";
 });
 
-function Key(props) {
+const Key = (props) => {
   const [state, setState] = useState("bg-gray-200 hover:bg-zinc-300 dark:bg-neutral-500 dark:text-white dark:hover:bg-neutral-700");
 
   const x = props.value.length === 1 ? "text-xl w-8 sm:w-10 " : "p-2 sm:p-4 ";
@@ -34,9 +34,9 @@ function Key(props) {
       {props.value === "DEL" ? <BackspaceIcon /> : props.value}
     </button>
   );
-}
+};
 
-function KeyBoard(props) {
+const KeyBoard = (props) => {
   const [letters, setletters] = useState(defaultLetters);
   useEffect(() => {
     setletters(props.letters); // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,6 +66,6 @@ function KeyBoard(props) {
       </div>
     </div>
   );
-}
+};
 
 export default KeyBoard;

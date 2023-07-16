@@ -1,13 +1,13 @@
-function Box(props) {
+const Box = (props) => {
   let state = "text-black border-2 border-gray-300  dark:text-white";
   if (props.state === "C") state = "bg-green-700 text-white";
   if (props.state === "E") state = "bg-amber-500 text-white";
   if (props.state === "N") state = "bg-zinc-500 text-white dark:bg-gray-700";
 
   return <div className={"w-8 h-8 sm:w-10 sm:h-10 grid place-items-center p-0 m-0 font-bold text-lg sm:text-2xl " + state}>{props.value}</div>;
-}
+};
 
-function Help() {
+const Help = () => {
   return (
     <>
       <p className="mr-1 text-sm text-left opacity-75 sm:text-base font-regular">Guess the WORDLE in six tries.</p>
@@ -49,6 +49,6 @@ function Help() {
       </p>
     </>
   );
-}
+};
 
 export default Help;

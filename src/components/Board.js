@@ -2,29 +2,30 @@ import { useEffect, useState } from "react";
 import Box from "./Box";
 import words from "../words";
 
+const correct = words[Math.floor(Math.random() * words.length - 1)].toUpperCase();
+let defaulBoard = [];
+let defaultLetters = [];
+
+"abcdefghijklmnopqrstuvwxyz".split("").forEach((i) => {
+  defaultLetters[i] = "";
+});
+
+for (let i = 0; i < 6; i++) {
+  defaulBoard.push([]);
+  for (let j = 0; j < 5; j++) {
+    defaulBoard[i].push(["", ""]);
+  }
+}
+
 const Board = (props) => {
-  const [letters, setLetters] = useState({});
-  const [board, setBoard] = useState([]);
+  const [letters, setLetters] = useState(defaultLetters);
+  const [board, setBoard] = useState(defaulBoard);
   const [changed, setChanged] = useState(false);
   const [row, setRow] = useState(0);
   const [col, setCol] = useState(0);
   const [win, setWin] = useState(false);
   const [lost, setLost] = useState(false);
   const [message, setMessage] = useState("");
-
-  const correct = words[Math.floor(Math.random() * words.length - 1)].toUpperCase();
-
-  useEffect(() => {
-    const defaultLetters = {};
-    "abcdefghijklmnopqrstuvwxyz".split("").forEach((i) => {
-      defaultLetters[i] = "";
-    });
-
-    const defaultBoard = Array.from({ length: 6 }, () => Array.from({ length: 5 }, () => ["", ""]));
-
-    setLetters(defaultLetters);
-    setBoard(defaultBoard);
-  }, []);
 
   useEffect(() => {
     if (win || lost) {

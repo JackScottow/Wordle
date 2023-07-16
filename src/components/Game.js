@@ -6,7 +6,7 @@ import KeyBoard from "./KeyBoard";
 import Modal from "./Modal";
 import NavBar from "./NavBar";
 
-function Game(props) {
+const Game = (props) => {
   const [letter, setLetter] = useState();
   const [changed, setChanged] = useState(false);
   const [letters, setLetters] = useState({});
@@ -62,6 +62,6 @@ function Game(props) {
       </div>
     </>
   );
-}
+};
 
 export default Game;
