@@ -1,51 +1,34 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Board from "./Board";
 import Error from "./Error";
 import Help from "./Help";
 import KeyBoard from "./KeyBoard";
 import Modal from "./Modal";
 import NavBar from "./NavBar";
+import { useKeyboard } from "../hooks/useKeyboard";
+import { useGameContext } from "../context/GameContext";
 
-const Game = (props) => {
-  const [letter, setLetter] = useState();
-  const [changed, setChanged] = useState(false);
-  const [letters, setLetters] = useState({});
+const Game = ({ darkness }) => {
+  const { letter, clicked, handleKeyPress } = useKeyboard();
+  const { darkMode, setDarkMode, error, letters, setLetters } = useGameContext();
   const [help, setHelp] = useState(false);
-  const [clicked, setClicked] = useState(0);
-  const [error, setError] = useState("");
-  const [dark, setDark] = useState(false);
-
-  const onClickDown = (event) => {
-    if (event.key === "Enter") {
-      setLetter("ENTER");
-      setClicked(clicked + 1);
-    } else if (event.key === "Backspace") {
-      setLetter("DEL");
-      setClicked(clicked + 1);
-    } else if ("abcdefghijklmnopqrstuvwxyz".includes(event.key.toLowerCase())) {
-      setLetter(event.key.toUpperCase());
-      setClicked(clicked + 1);
-    }
-  };
+  const [changed, setChanged] = useState(false);
 
   useEffect(() => {
-    window.addEventListener("keydown", onClickDown);
-
-    return () => window.removeEventListener("keydown", onClickDown);
-  });
+    const onKeyDown = (event) => handleKeyPress(event.key);
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [handleKeyPress]);
 
   useEffect(() => {
-    props.darkness(dark); // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dark]);
+    darkness(darkMode);
+  }, [darkness, darkMode]);
 
-  const keyHandler = (letterValue) => {
-    setLetter(letterValue);
-    setClicked(clicked + 1);
-  };
-  const LettersHandler = (lettersValue) => {
+  const handleLettersUpdate = (lettersValue) => {
     setLetters(lettersValue);
-    setChanged(!changed);
+    setChanged((prev) => !prev);
   };
+
   return (
     <>
       {help && (
@@ -55,10 +38,10 @@ const Game = (props) => {
       )}
       {error && <Error>{error}</Error>}
       <div>
-        <NavBar help={setHelp} darkness={setDark} dark={dark} />
+        <NavBar help={setHelp} darkness={setDarkMode} dark={darkMode} />
         <hr />
-        <Board letter={letter} clicks={clicked} letters={LettersHandler} error={setError} />
-        <KeyBoard keyHandler={keyHandler} letters={letters} changed={changed} />
+        <Board letter={letter} clicks={clicked} letters={handleLettersUpdate} />
+        <KeyBoard keyHandler={handleKeyPress} letters={letters} changed={changed} />
       </div>
     </>
   );
