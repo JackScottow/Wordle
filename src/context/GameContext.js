@@ -6,6 +6,15 @@ export const GameProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(true);
   const [letters, setLetters] = useState({});
   const [error, setError] = useState("");
+  const [gameKey, setGameKey] = useState(0);
+
+  const resetGame = () => {
+    setGameKey((prev) => prev + 1);
+    setLetters({});
+    setError("");
+    // Force a new random word by reloading the Board component
+    window.location.reload();
+  };
 
   const value = {
     darkMode,
@@ -14,6 +23,8 @@ export const GameProvider = ({ children }) => {
     setLetters,
     error,
     setError,
+    resetGame,
+    gameKey,
   };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;

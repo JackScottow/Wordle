@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Box from "./Box";
 import words from "../words";
+import { useGameContext } from "../context/GameContext";
 
 const correct = words[Math.floor(Math.random() * words.length - 1)].toUpperCase();
 let defaulBoard = [];
@@ -25,6 +26,7 @@ const Board = (props) => {
   const [win, setWin] = useState(false);
   const [lost, setLost] = useState(false);
   const [message, setMessage] = useState("");
+  const { resetGame } = useGameContext();
 
   useEffect(() => {
     if (win || lost) {
@@ -116,7 +118,14 @@ const Board = (props) => {
           </div>
         );
       })}
-      <div className="grid h-8 font-bold place-items-center dark:text-white">{lost || win ? message : ""}</div>
+      {(lost || win) && (
+        <div className="flex flex-col items-center gap-2 mt-4 mb-2">
+          <div className="font-bold dark:text-white">{message}</div>
+          <button onClick={props.onReset} className="px-4 py-2 text-sm font-semibold text-white transition-colors bg-green-600 rounded hover:bg-green-700">
+            Play Again
+          </button>
+        </div>
+      )}
     </div>
   );
 };

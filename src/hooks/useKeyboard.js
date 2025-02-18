@@ -18,9 +18,15 @@ export const useKeyboard = () => {
     }
   }, []);
 
+  const reset = useCallback(() => {
+    setLetter("");
+    setClicked(0);
+  }, []);
+
   return {
     letter,
     clicked,
     handleKeyPress,
+    reset,
   };
 };

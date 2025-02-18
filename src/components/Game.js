@@ -9,8 +9,8 @@ import { useKeyboard } from "../hooks/useKeyboard";
 import { useGameContext } from "../context/GameContext";
 
 const Game = ({ darkness }) => {
-  const { letter, clicked, handleKeyPress } = useKeyboard();
-  const { darkMode, setDarkMode, error, letters, setLetters } = useGameContext();
+  const { letter, clicked, handleKeyPress, reset } = useKeyboard();
+  const { darkMode, setDarkMode, error, setError, letters, setLetters, gameKey, resetGame } = useGameContext();
   const [help, setHelp] = useState(false);
   const [changed, setChanged] = useState(false);
 
@@ -29,6 +29,11 @@ const Game = ({ darkness }) => {
     setChanged((prev) => !prev);
   };
 
+  const handleReset = () => {
+    reset();
+    resetGame();
+  };
+
   return (
     <>
       {help && (
@@ -40,7 +45,7 @@ const Game = ({ darkness }) => {
       <div>
         <NavBar help={setHelp} darkness={setDarkMode} dark={darkMode} />
         <hr />
-        <Board letter={letter} clicks={clicked} letters={handleLettersUpdate} />
+        <Board key={gameKey} letter={letter} clicks={clicked} letters={handleLettersUpdate} error={setError} onReset={handleReset} />
         <KeyBoard keyHandler={handleKeyPress} letters={letters} changed={changed} />
       </div>
     </>
