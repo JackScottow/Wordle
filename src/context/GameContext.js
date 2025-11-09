@@ -1,19 +1,34 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const GameContext = createContext();
 
 export const GameProvider = ({ children }) => {
-  const [darkMode, setDarkMode] = useState(true);
-  const [letters, setLetters] = useState({});
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem("darkMode");
+    return saved !== null ? JSON.parse(saved) : true;
+  });
+  const [letters, setLetters] = useState(() => {
+    const letters = [];
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach((i) => {
+      letters[i] = "";
+    });
+    return letters;
+  });
   const [error, setError] = useState("");
   const [gameKey, setGameKey] = useState(0);
 
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
+
   const resetGame = () => {
+    const freshLetters = [];
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach((i) => {
+      freshLetters[i] = "";
+    });
+    setLetters(freshLetters);
     setGameKey((prev) => prev + 1);
-    setLetters({});
     setError("");
-    // Force a new random word by reloading the Board component
-    window.location.reload();
   };
 
   const value = {

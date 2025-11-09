@@ -11,7 +11,13 @@ const App = () => {
   };
 
   useEffect(() => {
-    document.documentElement.classList.add("dark");
+    const saved = localStorage.getItem("darkMode");
+    const isDark = saved !== null ? JSON.parse(saved) : true;
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
   }, []);
 
   return (

@@ -24,7 +24,7 @@ const Settings = (props) => {
     <div>
       <SettingsIcon onClick={handleClick} className="text-black cursor-pointer dark:text-white hover:animate-spin" />
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
-        <FormControlLabel className="pl-5 text-black" control={<Switch color="default" size="small" onChange={handleChange} />} label="Dark Mode" />
+        <FormControlLabel className="pl-5 text-black" control={<Switch checked={props.dark} color="default" size="small" onChange={handleChange} />} label="Dark Mode" />
         <hr />
         <div className="flex justify-around pt-2">
           <a className="flex" href="https://github.com/JackScottow">

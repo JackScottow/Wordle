@@ -3,23 +3,29 @@ import Box from "./Box";
 import words from "../words";
 import { useGameContext } from "../context/GameContext";
 
-const correct = words[Math.floor(Math.random() * words.length - 1)].toUpperCase();
-let defaulBoard = [];
-let defaultLetters = [];
-
-"abcdefghijklmnopqrstuvwxyz".split("").forEach((i) => {
-  defaultLetters[i] = "";
-});
-
-for (let i = 0; i < 6; i++) {
-  defaulBoard.push([]);
-  for (let j = 0; j < 5; j++) {
-    defaulBoard[i].push(["", ""]);
+const createDefaultBoard = () => {
+  const board = [];
+  for (let i = 0; i < 6; i++) {
+    board.push([]);
+    for (let j = 0; j < 5; j++) {
+      board[i].push(["", ""]);
+    }
   }
-}
+  return board;
+};
+
+const createDefaultLetters = () => {
+  const letters = [];
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach((i) => {
+    letters[i] = "";
+  });
+  return letters;
+};
+
 const Board = (props) => {
-  const [letters, setLetters] = useState(defaultLetters);
-  const [board, setBoard] = useState(defaulBoard);
+  const [correct, setCorrect] = useState(() => words[Math.floor(Math.random() * words.length - 1)].toUpperCase());
+  const [letters, setLetters] = useState(() => createDefaultLetters());
+  const [board, setBoard] = useState(() => createDefaultBoard());
   const [changed, setChanged] = useState(false);
   const [row, setRow] = useState(0);
   const [col, setCol] = useState(0);
@@ -28,19 +34,19 @@ const Board = (props) => {
   const [message, setMessage] = useState("");
   const { resetGame } = useGameContext();
 
+
   useEffect(() => {
-    if (win || lost) {
-      console.log("Game ended!");
-    } else {
-      if (props.clicks !== 0) {
-        if (props.letter === "DEL") {
-          setCol(col === 0 ? 0 : col - 1);
-          setBoard((prevBoard) => {
-            prevBoard[row][col === 0 ? 0 : col - 1][0] = "";
-            return prevBoard;
-          });
-        } else {
-          setBoard((prevBoard) => {
+    if (win || lost) return;
+
+    if (props.clicks !== 0) {
+      if (props.letter === "DEL") {
+        setCol(col === 0 ? 0 : col - 1);
+        setBoard((prevBoard) => {
+          prevBoard[row][col === 0 ? 0 : col - 1][0] = "";
+          return prevBoard;
+        });
+      } else {
+        setBoard((prevBoard) => {
             if (col < 5) {
               if (props.letter !== "ENTER") {
                 prevBoard[row][col][0] = props.letter;
@@ -59,26 +65,48 @@ const Board = (props) => {
                   word += prevBoard[row][i][0];
                 }
                 if (words.includes(word.toLowerCase())) {
+                  let availableLetters = {};
+                  for (let i = 0; i < 5; i++) {
+                    const letter = correct[i];
+                    availableLetters[letter] = (availableLetters[letter] || 0) + 1;
+                  }
+
                   for (let i = 0; i < 5; i++) {
                     if (correct[i] === prevBoard[row][i][0]) {
                       prevBoard[row][i][1] = "C";
                       correctLetters++;
-                    } else if (correct.includes(prevBoard[row][i][0])) prevBoard[row][i][1] = "E";
-                    else prevBoard[row][i][1] = "N";
-                    setRow(row + 1);
-                    if (row === 5) {
-                      setLost(true);
-                      setTimeout(() => {
-                        setMessage(`It was ${correct}`);
-                      }, 750);
+                      availableLetters[prevBoard[row][i][0]]--;
                     }
+                  }
 
-                    setCol(0);
+                  for (let i = 0; i < 5; i++) {
+                    const guessedLetter = prevBoard[row][i][0];
+                    if (prevBoard[row][i][1] !== "C") {
+                      if (availableLetters[guessedLetter] && availableLetters[guessedLetter] > 0) {
+                        prevBoard[row][i][1] = "E";
+                        availableLetters[guessedLetter]--;
+                      } else {
+                        prevBoard[row][i][1] = "N";
+                      }
+                    }
+                  }
+
+                  for (let i = 0; i < 5; i++) {
                     setLetters((prev) => {
                       prev[board[row][i][0]] = board[row][i][1];
                       return prev;
                     });
                   }
+
+                  setRow(row + 1);
+                  if (row === 5) {
+                    setLost(true);
+                    setTimeout(() => {
+                      setMessage(`It was ${correct}`);
+                    }, 750);
+                  }
+
+                  setCol(0);
                   setChanged(!changed);
 
                   if (correctLetters === 5) {
@@ -97,8 +125,7 @@ const Board = (props) => {
               }
             }
             return prevBoard;
-          });
-        }
+        });
       }
     } // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.clicks]);

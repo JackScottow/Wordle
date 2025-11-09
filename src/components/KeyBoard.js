@@ -7,11 +7,13 @@ const keyboard = {
   line3: "ZXCVBNM",
 };
 
-let defaultLetters = [];
-
-"abcdefjhijklmnopqrstuvwxyz".split("").forEach((i) => {
-  defaultLetters[i] = "";
-});
+const createDefaultLetters = () => {
+  const letters = [];
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").forEach((i) => {
+    letters[i] = "";
+  });
+  return letters;
+};
 
 const Key = (props) => {
   const [state, setState] = useState("bg-gray-200 hover:bg-zinc-300 dark:bg-neutral-500 dark:text-white dark:hover:bg-neutral-700");
@@ -22,11 +24,15 @@ const Key = (props) => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      if (props.state === "C") setState("text-white bg-green-700");
-      if (props.state === "E") setState("text-white bg-amber-500");
-      if (props.state === "N") setState("text-white bg-zinc-500 bg-zinc-700");
-    }, 1075);
+    if (props.state === "") {
+      setState("bg-gray-200 hover:bg-zinc-300 dark:bg-neutral-500 dark:text-white dark:hover:bg-neutral-700");
+    } else {
+      setTimeout(() => {
+        if (props.state === "C") setState("text-white bg-green-700");
+        if (props.state === "E") setState("text-white bg-amber-500");
+        if (props.state === "N") setState("text-white bg-zinc-500 bg-zinc-700");
+      }, 1075);
+    }
   }, [props.state]);
 
   return (
@@ -37,10 +43,10 @@ const Key = (props) => {
 };
 
 const KeyBoard = (props) => {
-  const [letters, setletters] = useState(defaultLetters);
+  const [letters, setletters] = useState(() => createDefaultLetters());
   useEffect(() => {
-    setletters(props.letters); // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.changed]);
+    setletters(props.letters);
+  }, [props.letters, props.changed]);
 
   const keyHandler = (value) => {
     props.keyHandler(value);
